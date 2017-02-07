@@ -213,8 +213,12 @@ class CmdStrUp(Command):
     def func(self):
         "This performs the actual command"
         pointerror = "You have no remaining points to spend on abilities."
+        caperror = "Your Strength cannot be higher than 5."
         if not (self.caller.db.freepoints > 0):
             self.caller.msg(pointerror)
+            return
+        if (self.caller.db.strength == 5):
+            self.caller.msg(caperror)
             return
         # at this point the argument is tested as valid. Let's set it.
         self.caller.db.strength += 1
@@ -265,8 +269,12 @@ class CmdDexUp(Command):
     def func(self):
         "This performs the actual command"
         pointerror = "You have no remaining points to spend on abilities."
+        caperror = "Your Dexterity cannot be higher than 5."
         if not (self.caller.db.freepoints > 0):
             self.caller.msg(pointerror)
+            return
+        if (self.caller.db.dexterity == 5):
+            self.caller.msg(caperror)
             return
         # at this point the argument is tested as valid. Let's set it.
         self.caller.db.dexterity += 1
@@ -314,8 +322,12 @@ class CmdConUp(Command):
     def func(self):
         "This performs the actual command"
         pointerror = "You have no remaining points to spend on abilities."
+        caperror = "Your Constitution cannot be higher than 5."
         if not (self.caller.db.freepoints > 0):
             self.caller.msg(pointerror)
+            return
+        if (self.caller.db.constitution == 5):
+            self.caller.msg(caperror)
             return
         # at this point the argument is tested as valid. Let's set it.
         self.caller.db.constitution += 1
@@ -363,8 +375,12 @@ class CmdWisUp(Command):
     def func(self):
         "This performs the actual command"
         pointerror = "You have no remaining points to spend on abilities."
+        caperror = "Your Wisdom cannot be higher than 5."
         if not (self.caller.db.freepoints > 0):
             self.caller.msg(pointerror)
+            return
+        if (self.caller.db.wisdom == 5):
+            self.caller.msg(caperror)
             return
         # at this point the argument is tested as valid. Let's set it.
         self.caller.db.wisdom += 1
@@ -412,8 +428,12 @@ class CmdChaUp(Command):
     def func(self):
         "This performs the actual command"
         pointerror = "You have no remaining points to spend on abilities."
+        caperror = "Your Charisma cannot be higher than 5."
         if not (self.caller.db.freepoints > 0):
             self.caller.msg(pointerror)
+            return
+        if (self.caller.db.charisma == 5):
+            self.caller.msg(caperror)
             return
         # at this point the argument is tested as valid. Let's set it.
         self.caller.db.charisma += 1
@@ -461,8 +481,12 @@ class CmdIntUp(Command):
     def func(self):
         "This performs the actual command"
         pointerror = "You have no remaining points to spend on abilities."
+        caperror = "Your Intelligence cannot be higher than 5."
         if not (self.caller.db.freepoints > 0):
             self.caller.msg(pointerror)
+            return
+        if (self.caller.db.intelligence == 5):
+            self.caller.msg(caperror)
             return
         # at this point the argument is tested as valid. Let's set it.
         self.caller.db.intelligence += 1

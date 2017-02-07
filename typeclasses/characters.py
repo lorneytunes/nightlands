@@ -18,6 +18,7 @@ class Character(DefaultCharacter):
         self.db.charisma = 2
         self.db.intelligence = 2
         self.db.freepoints = 8
+        self.db.skills = {"Battle Tactics" : 0, "Brawling" : 0, "Conversation" : 0, "Dancing" : 0, "Economics" : 0, "Endurance" : 0, "Intimidation" : 0, "Singing" : 0, "Trade" : 0, "Warcraft" = 0}
     
     #Getters and setters
     def get_abilities(self):
