@@ -7,6 +7,7 @@ Commands describe the input the player can do to the game.
 
 from evennia import Command as BaseCommand
 # from evennia import default_cmds
+from typeclasses.basestats import class_dict
 
 
 class Command(BaseCommand):
@@ -187,7 +188,7 @@ class CmdAbilities(Command):
     key = "abilities"
     aliases = ["abi"]
     lock = "cmd:all()"
-    help_category = "General"
+    help_category = "mush"
     
     def func(self):
         str, dex, con, wis, cha, int = self.caller.get_abilities()
@@ -220,7 +221,7 @@ class CmdStrUp(Command):
         if (self.caller.db.strength == 5):
             self.caller.msg(caperror)
             return
-        # at this point the argument is tested as valid. Let's set it.
+
         self.caller.db.strength += 1
         self.caller.db.freepoints -= 1
         self.caller.msg("Your Strength is now %i. You now have %i points left to spend on abilities." % (self.caller.db.strength, self.caller.db.freepoints))
@@ -246,7 +247,7 @@ class CmdStrDown(Command):
         if (self.caller.db.strength == 1):
             self.caller.msg(pointerror)
             return
-        # at this point the argument is tested as valid. Let's set it.
+
         self.caller.db.strength -= 1
         self.caller.db.freepoints += 1
         self.caller.msg("Your Strength is now %i. You now have %i points left to spend on abilities." % (self.caller.db.strength, self.caller.db.freepoints))
@@ -276,7 +277,7 @@ class CmdDexUp(Command):
         if (self.caller.db.dexterity == 5):
             self.caller.msg(caperror)
             return
-        # at this point the argument is tested as valid. Let's set it.
+
         self.caller.db.dexterity += 1
         self.caller.db.freepoints -= 1
         self.caller.msg("Your Dexterity is now %i. You now have %i points left to spend on abilities." % (self.caller.db.dexterity, self.caller.db.freepoints))
@@ -302,7 +303,7 @@ class CmdDexDown(Command):
         if (self.caller.db.dexterity == 1):
             self.caller.msg(pointerror)
             return
-        # at this point the argument is tested as valid. Let's set it.
+
         self.caller.db.dexterity -= 1
         self.caller.db.freepoints += 1
         self.caller.msg("Your Dexterity is now %i. You now have %i points left to spend on abilities." % (self.caller.db.dexterity, self.caller.db.freepoints))
@@ -329,7 +330,7 @@ class CmdConUp(Command):
         if (self.caller.db.constitution == 5):
             self.caller.msg(caperror)
             return
-        # at this point the argument is tested as valid. Let's set it.
+
         self.caller.db.constitution += 1
         self.caller.db.freepoints -= 1
         self.caller.msg("Your Constitution is now %i. You now have %i points left to spend on abilities." % (self.caller.db.constitution, self.caller.db.freepoints))
@@ -355,7 +356,7 @@ class CmdConDown(Command):
         if (self.caller.db.constitution == 1):
             self.caller.msg(pointerror)
             return
-        # at this point the argument is tested as valid. Let's set it.
+
         self.caller.db.constitution -= 1
         self.caller.db.freepoints += 1
         self.caller.msg("Your wisstitution is now %i. You now have %i points left to spend on abilities." % (self.caller.db.wisstitution, self.caller.db.freepoints))
@@ -382,7 +383,7 @@ class CmdWisUp(Command):
         if (self.caller.db.wisdom == 5):
             self.caller.msg(caperror)
             return
-        # at this point the argument is tested as valid. Let's set it.
+
         self.caller.db.wisdom += 1
         self.caller.db.freepoints -= 1
         self.caller.msg("Your Wisdom is now %i. You now have %i points left to spend on abilities." % (self.caller.db.wisdom, self.caller.db.freepoints))
@@ -408,7 +409,7 @@ class CmdWisDown(Command):
         if (self.caller.db.wisdom == 1):
             self.caller.msg(pointerror)
             return
-        # at this point the argument is tested as valid. Let's set it.
+
         self.caller.db.wisdom -= 1
         self.caller.db.freepoints += 1
         self.caller.msg("Your Wisdom is now %i. You now have %i points left to spend on abilities." % (self.caller.db.wisdom, self.caller.db.freepoints))
@@ -435,7 +436,7 @@ class CmdChaUp(Command):
         if (self.caller.db.charisma == 5):
             self.caller.msg(caperror)
             return
-        # at this point the argument is tested as valid. Let's set it.
+
         self.caller.db.charisma += 1
         self.caller.db.freepoints -= 1
         self.caller.msg("Your Charisma is now %i. You now have %i points left to spend on abilities." % (self.caller.db.Charisma, self.caller.db.freepoints))
@@ -461,7 +462,7 @@ class CmdChaDown(Command):
         if (self.caller.db.charisma == 1):
             self.caller.msg(pointerror)
             return
-        # at this point the argument is tested as valid. Let's set it.
+
         self.caller.db.charisma -= 1
         self.caller.db.freepoints += 1
         self.caller.msg("Your Charisma is now %i. You now have %i points left to spend on abilities." % (self.caller.db.charisma, self.caller.db.freepoints))
@@ -488,7 +489,7 @@ class CmdIntUp(Command):
         if (self.caller.db.intelligence == 5):
             self.caller.msg(caperror)
             return
-        # at this point the argument is tested as valid. Let's set it.
+
         self.caller.db.intelligence += 1
         self.caller.db.freepoints -= 1
         self.caller.msg("Your Intelligence is now %i. You now have %i points left to spend on abilities." % (self.caller.db.intelligence, self.caller.db.freepoints))
@@ -514,7 +515,96 @@ class CmdIntDown(Command):
         if (self.caller.db.intelligence == 1):
             self.caller.msg(pointerror)
             return
-        # at this point the argument is tested as valid. Let's set it.
+
         self.caller.db.intelligence -= 1
         self.caller.db.freepoints += 1
         self.caller.msg("Your Intelligence is now %i. You now have %i points left to spend on abilities." % (self.caller.db.intelligence, self.caller.db.freepoints))
+
+class CmdListSkills(Command):
+    """
+    list the character's current skills
+    
+    Usage:
+      +skills
+    
+    This lists any skills the character has with a value greater than 0.
+    """
+    
+    key = "+skills"
+    help_category = "mush"
+    lock = "cmd:all()"
+    def func(self):
+        "This performs the actual command"
+        skills_dict = self.caller.get_skills()
+        skill_string = "SKILLS\n"
+        for skill in skills_dict:
+           
+            if skill[1] > 0:
+                skill_string = skill_string + str(skill[0]) + ": " + str(skill[1]) + "\n"
+        self.caller.msg(skill_string)
+
+class CmdSetClass(Command):
+    """
+    change the character's class
+    
+    Usage:
+      +setclass <class>
+      
+    This changes the character's class to the chosen class and awards the appropriate skills.
+    """
+    
+    key = "+setclass"
+    help_category = "mush"
+    
+    def func(self):
+        "This performs the actual command"
+        classerror = "You must specify a valid class."
+        classinput = str(self.args).strip()
+        if not self.args:
+            self.caller.msg(classerror)
+            return
+        for key, val in class_dict.items():
+            if classinput in key.lower():
+                self.caller.db.skills = val
+                self.caller.msg("Class set to " + key + ".")
+                break
+        else:
+            self.caller.msg(classerror)
+
+from evennia import create_object
+
+class CmdCreateNPC(Command):
+    """
+    create a new npc
+
+    Usage:
+        +createNPC <name>
+
+    Creates a new, named NPC. The NPC will start with a Power of 1.
+    """ 
+    key = "+createnpc"
+    locks = "call:not perm(nonpcs)"
+    help_category = "mush" 
+
+    def func(self):
+        "creates the object and names it"
+        caller = self.caller
+        if not self.args:
+            caller.msg("Usage: +createNPC <name>")
+            return
+        if not caller.location:
+            # may not create npc when OOC
+            caller.msg("You must have a location to create an npc.")
+            return
+        # make name always start with capital letter
+        name = self.args.strip().capitalize()
+        # create npc in caller's location
+        npc = create_object("characters.Character", 
+                      key=name, 
+                      location=caller.location,
+                      locks="edit:id(%i) and perm(Builders);call:false()" % caller.id)
+        # announce 
+        message = "%s created the NPC '%s'."
+        caller.msg(message % ("You", name)) 
+        caller.location.msg_contents(message % (caller.key, name), 
+                                                exclude=caller)

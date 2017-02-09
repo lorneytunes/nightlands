@@ -15,7 +15,6 @@ own cmdsets by inheriting from them or directly from `evennia.CmdSet`.
 """
 
 from evennia import default_cmds
-from commands.command import CmdAbilities
 from evennia import CmdSet
 from commands import command
 
@@ -35,7 +34,10 @@ class CharacterCmdSet(default_cmds.CharacterCmdSet):
         #
         # any commands you add below will overload the default ones.
         #
-        self.add(CmdAbilities())
+        self.add(command.CmdAbilities())
+        self.add(command.CmdListSkills())
+        self.add(command.CmdCreateNPC())
+        
 
 
 class PlayerCmdSet(default_cmds.PlayerCmdSet):
@@ -113,3 +115,4 @@ class ChargenCmdset(CmdSet):
         self.add(command.CmdChaDown())
         self.add(command.CmdIntUp())
         self.add(command.CmdIntDown())
+        self.add(command.CmdSetClass())

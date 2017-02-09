@@ -18,11 +18,13 @@ class Character(DefaultCharacter):
         self.db.charisma = 2
         self.db.intelligence = 2
         self.db.freepoints = 8
-        self.db.skills = {"Battle Tactics" : 0, "Brawling" : 0, "Conversation" : 0, "Dancing" : 0, "Economics" : 0, "Endurance" : 0, "Intimidation" : 0, "Singing" : 0, "Trade" : 0, "Warcraft" = 0}
+        self.db.skills = {"Battle Tactics" : 0, "Brawling" : 0, "Conversation" : 0, "Dancing" : 0, "Economics" : 0, "Endurance" : 0, "Intimidation" : 0, "Singing" : 0, "Trade" : 0, "Warcraft" : 0}
+        self.db.race = "Human"
     
     #Getters and setters
     def get_abilities(self):
         return self.db.strength, self.db.dexterity, self.db.constitution, self.db.wisdom, self.db.charisma, self.db.intelligence
     def get_freepoints(self):
         return self.db.freepoints
-    pass
+    def get_skills(self):
+        return self.db.skills.items()
